@@ -1,3 +1,6 @@
+**USE THE ARROW KEYS TO CONTROL THE LEADER DRONE !**
+
+
 # First example
 
 Parameters used :
@@ -69,5 +72,3 @@ Parameters used :
 ```
 
 ![](img/first_params.gif)
-
-# Second example
