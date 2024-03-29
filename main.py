@@ -18,14 +18,7 @@ WIDTH, HEIGHT = params["width"], params["height"]
 WAVE_FREQUENCY = params["wave_frequency"]
 CAPTURE_WIDTH, CAPTURE_HEIGHT = params["capture_width"], params["capture_height"]
 SHOW_CAPTURE = params["show_capture"]
-
-
-
-
-############################################
-######### COMPUTE OTHER CONSTANTS ##########
-############################################
-security_zone = min(HORIZONTAL_DISTANCE, VERTICAL_DISTANCE)//4
+SECURITY_ZONE = params["security_zone"]
 
 
 
@@ -47,12 +40,11 @@ pygame.display.set_caption("Drone Orthmosaic")
 #Leader drone
 leader_drone = Drone(x = WIDTH // 2, 
                     y = HEIGHT // 2, 
-                    color = RED, 
                     friction = FRICTION, 
                     leader = True, 
                     width = WIDTH,
                     height = HEIGHT,
-                    security_zone = security_zone,
+                    security_zone = SECURITY_ZONE,
                     wave_frequency = WAVE_FREQUENCY
                     )
 
@@ -60,11 +52,18 @@ leader_drone = Drone(x = WIDTH // 2,
 #Automatic drones : Formation in V
 leader_pos = (WIDTH // 2, HEIGHT // 2)
 drones = []
-drones.append(Drone(WIDTH // 2 + HORIZONTAL_DISTANCE, HEIGHT // 2 + VERTICAL_DISTANCE, BLUE, FRICTION, False, WIDTH, HEIGHT, leader_pos))
-drones.append(Drone(WIDTH // 2 - HORIZONTAL_DISTANCE, HEIGHT // 2 + VERTICAL_DISTANCE, BLUE, FRICTION, False, WIDTH, HEIGHT, leader_pos))
-drones.append(Drone(WIDTH // 2 + 2*HORIZONTAL_DISTANCE, HEIGHT // 2 + 2*VERTICAL_DISTANCE, BLUE, FRICTION, False, WIDTH, HEIGHT, leader_pos))
-drones.append(Drone(WIDTH // 2 - 2*HORIZONTAL_DISTANCE, HEIGHT // 2 + 2*VERTICAL_DISTANCE, BLUE, FRICTION, False, WIDTH, HEIGHT, leader_pos))
-drones.append(Drone(WIDTH // 2 + 3*HORIZONTAL_DISTANCE, HEIGHT // 2 + 3*VERTICAL_DISTANCE, BLUE, FRICTION, False, WIDTH, HEIGHT, leader_pos))
+relative_pos = [(1,1), (-1,1), (2,2), (-2,2), (3,3)] #V formation
+for x,y in relative_pos :
+    drones.append(Drone( x = WIDTH//2 + x*HORIZONTAL_DISTANCE, 
+                        y = HEIGHT//2 + y*VERTICAL_DISTANCE,
+                        friction = FRICTION, 
+                        leader = False, 
+                        width = WIDTH, 
+                        height = HEIGHT, 
+                        leader_pos = leader_pos,
+                        security_zone = SECURITY_ZONE
+                        )
+)
 
 
 #Pixels captures
@@ -96,7 +95,7 @@ while running:
         moves_leader[3] = 1
     leader_drone.move(moves_leader)
     
-    
+
     """
     #Draw the pixels captures
     if SHOW_CAPTURE :

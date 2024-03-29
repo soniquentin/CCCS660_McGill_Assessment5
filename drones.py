@@ -12,13 +12,12 @@ class Drone() :
     show_waves = params["show_waves"] #Show the communication waves
     wind_speed, wind_angle = params["wind_speed"], params["wind_angle"]
 
-    def __init__(self, x, y, color, friction = 1, leader = False, width = 800, height = 600, leader_pos = None, security_zone = 30, wave_frequency = 5) :
+    def __init__(self, x, y, friction = 1, leader = False, width = 800, height = 600, leader_pos = None, security_zone = 30, wave_frequency = 5) :
 
         self.x = x
         self.y = y
         self.speed_x = 0
         self.speed_y = 0
-        self.color = color
         self.leader = leader
         self.width = width
         self.height = height
@@ -84,7 +83,7 @@ class Drone() :
         if self.leader :
             self.tick += 1
             if self.tick % self.wave_frequency == 0 :
-                self.communication_waves.append(Communication_wave(self.x + self.square_size // 2, self.y + self.square_size // 2, self.speed_x , self.speed_y , ( self.color[0]//2 + 128 , self.color[1]//2 + 128, self.color[2]//2 + 128)))
+                self.communication_waves.append(Communication_wave(self.x + self.square_size // 2, self.y + self.square_size // 2, self.speed_x , self.speed_y , ( 255 , 200, 200)))
             for wave in self.communication_waves :
                 wave.grow()
             self.communication_waves = [wave for wave in self.communication_waves if not wave.is_out_of_bounds(self.width, self.height)]
@@ -124,7 +123,6 @@ class Drone() :
 
 
     def draw(self, screen) :
-        #pygame.draw.rect(screen, self.color, (self.x, self.y, self.square_size, self.square_size))
         self.rect.topleft = (self.x, self.y)
         screen.blit(self.image, self.rect)
 
