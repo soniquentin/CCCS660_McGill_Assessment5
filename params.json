@@ -8,9 +8,9 @@
 "horizontal_distance" : 60,
 "vertical_distance" : 60,
 "security_zone" : 20,
-"wave_frequency" : 5,
+"wave_frequency" : 1,
 "wave_speed" : 60,
 "show_waves" : false,
-"wind_speed" : 0,
+"wind_speed" : 3,
 "wind_angle" : 45
 }
