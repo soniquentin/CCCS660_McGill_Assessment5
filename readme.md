@@ -72,3 +72,5 @@ Parameters used :
 ```
 
 ![](img/first_params.gif)
+
+Here, collisions may occured. So the distances between each drones must be increased or the maximum speed of the drones must be limited
